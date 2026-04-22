@@ -1,0 +1,65 @@
+================================================================
+  TELEGRAM BOT - SETUP INSTRUCTIONS
+================================================================
+
+STEP 1 — Run the SQL in Supabase
+---------------------------------
+1. Go to https://supabase.com → your project
+2. Click "SQL Editor" in the left sidebar
+3. Open the file: schema.sql
+4. Copy everything and paste it into the SQL editor
+5. Click "Run"
+   → This creates the tables and inserts all 47 subjects
+
+STEP 2 — Install Python packages
+----------------------------------
+Open a terminal (CMD or PowerShell) and run:
+
+  pip install python-telegram-bot==20.7 supabase==2.3.4
+
+Or just run:
+
+  pip install -r requirements.txt
+
+STEP 3 — Run the bot
+---------------------
+  python bot.py
+
+You should see: "Bot is running..."
+
+STEP 4 — Test it
+-----------------
+Open Telegram → search @EnglishDepartmentOfArtsBot → send /start
+
+================================================================
+  WHAT THE BOT CAN DO
+================================================================
+
+Student flow:
+  /start       → Register with student ID + name + pick subjects
+  /timetable   → View your weekly timetable
+  /mysubjects  → List your enrolled subjects
+  /menu        → Main menu with buttons
+
+From the menu students can:
+  📅 View timetable
+  📚 View their subjects
+  ➕ Add more subjects
+  ➖ Drop a subject
+
+================================================================
+  ADD TIMETABLE SLOTS (Admin - from Supabase)
+================================================================
+
+To assign a subject to a time slot, go to Supabase → Table Editor
+→ timetable_slots table → Insert row:
+
+  subject_code : e.g. "320301"
+  day          : Sunday / Monday / Tuesday / Wednesday / Thursday
+  time_slot    : 8-10 / 10-12 / 12-2
+  room         : e.g. "Room 204"
+  teacher_id   : optional
+
+Once added, students will see it automatically in their timetable.
+
+================================================================
