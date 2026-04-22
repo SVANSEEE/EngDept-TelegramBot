@@ -85,16 +85,18 @@ def format_timetable(slots):
     for s in slots:
         by_day.setdefault(s["day"], []).append(s)
     lines = ["--- Your Timetable ---\n"]
-    for day in ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"]:
+    for day in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"]:
         if day not in by_day:
             continue
         lines.append(f"{day}:")
         for s in sorted(by_day[day], key=lambda x: x["time_slot"]):
-            subj = s.get("subjects") or {}
-            title = subj.get("title", s["subject_code"]) if isinstance(subj, dict) else s["subject_code"]
+            subj  = s.get("subjects") or {}
+            name  = subj.get("title") if isinstance(subj, dict) else None
+            label = f"{s['subject_code']} — {name}" if name else s["subject_code"]
             time  = TIME_LABELS.get(s["time_slot"], s["time_slot"])
             room  = f" | Room {s['room']}" if s.get("room") else ""
-            lines.append(f"  {time}  {title}{room}")
+            teacher = f" | {s['teacher']}" if s.get("teacher") else ""
+            lines.append(f"  {time}  {label}{room}{teacher}")
         lines.append("")
     return "\n".join(lines)
 
