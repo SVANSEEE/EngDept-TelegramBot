@@ -52,7 +52,10 @@ def db_patch(table, match_params, data):
         return False
 
 def get_student_by_telegram(tid):
-    res = db_get("students", {"telegram_id": f"eq.{tid}", "limit": 1})
+    # try as integer first, fallback to string
+    res = db_get("students", {"telegram_id": f"eq.{int(tid)}", "limit": 1})
+    if not res:
+        res = db_get("students", {"telegram_id": f"eq.{str(tid)}", "limit": 1})
     return res[0] if res else None
 
 def get_student_by_user_id(uid):
